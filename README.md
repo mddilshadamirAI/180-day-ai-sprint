@@ -5,3 +5,4 @@ Today a day without code just feeling like miss something..
 just code using CS50P lectures with the teacher..
 Setup docker was performed by me today..
 Today mainly lecture oriented study..
+Lecture of the CS50P Harvard Studied..
