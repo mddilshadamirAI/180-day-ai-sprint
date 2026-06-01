@@ -1,32 +1,41 @@
+import argparse
+import sys
 import statistics
 
-print(statistics.mean([100, 90]))
+def greet(name: str):
+    """Prints a friendly greeting."""
+    print(f"Hello, {name}!")
 
-import sys
+def calculate_average(numbers: list[float]):
+    """Calculates and prints the mean of a provided list of numbers."""
+    if not numbers:
+        print("No numbers provided to calculate.")
+        return
+    avg = statistics.mean(numbers)
+    print(f"The average is: {avg}")
 
-print("hello, my name is", sys.argv[1])
+def main():
+    # Initialize the argument parser
+    parser = argparse.ArgumentParser(
+        description="A utility script to greet users and calculate averages."
+    )
+    
+    # Define arguments
+    parser.add_argument("name", help="The name of the person to greet")
+    parser.add_argument(
+        "--numbers", 
+        nargs="+", 
+        type=float, 
+        help="A list of numbers to calculate the mean (space-separated)"
+    )
 
-import sys
+    args = parser.parse_args()
 
-try:
-    print("hello, my name is", sys.argv[1])
-except IndexError:
-    print("Too few arguments")
+    # Execute logic
+    greet(args.name)
+    
+    if args.numbers:
+        calculate_average(args.numbers)
 
-    import sys
-
-if len(sys.argv) < 2:
-    print("Too few arguments")
-elif len(sys.argv) > 2:
-    print("Too many arguments")
-else:
-    print("hello, my name is", sys.argv[1])
-
-import sys
-
-if len(sys.argv) < 2:
-    sys.exit("Too few arguments")
-elif len(sys.argv) > 2:
-    sys.exit("Too many arguments")
-
-print("hello, my name is", sys.argv[1])
+if __name__ == "__main__":
+    main()
