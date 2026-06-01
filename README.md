@@ -1,7 +1,7 @@
 # 180-Day AI Sprint: My Journey 
 
 ## Overview
-A 13-hour daily commitment to transition from 12th-grade graduate to Agentic AI Founder.
+A 10-hour daily commitment to transition from 12th-grade graduate to Agentic AI Founder.
 
 ## Progress Tracking
 * **Day 1:** Initiated CS50P, Environment Setup.
@@ -25,3 +25,5 @@ A 13-hour daily commitment to transition from 12th-grade graduate to Agentic AI 
 1. Master Python fundamentals via CS50P.
 2. Build 10+ autonomous agents.
 3. Launch a production-ready AI product.
+
+## Review my codea and give me feedback..
