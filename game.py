@@ -6,78 +6,80 @@ import random
 
 # --- FIREBASE CONFIG ---
 if not firebase_admin._apps:
-    # If running on Streamlit Cloud, use st.secrets
     if "firebase" in st.secrets:
-        # We store the JSON structure in a 'firebase' secret in Streamlit
         cred_dict = dict(st.secrets["firebase"])
         cred = credentials.Certificate(cred_dict)
     else:
-        # If running locally on your PC, use the file
         cred = credentials.Certificate("serviceAccountKey.json")
-        
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 game_ref = db.collection('games').document('active_match')
 
-# --- 2. GAME LOGIC HELPERS ---
-def initialize_game():
-    game_ref.set({
-        'players': [], 'roles': {}, 'scores': {}, 
-        'round': 1, 'active': True, 'last_move': None
-    })
-
-# --- 3. UI LAYOUT ---
 st.title("👑 Raja Mantri Sipahi Chor")
 
-# Handle Player Joining
-state = game_ref.get().to_dict()
+# Fetch state
+doc = game_ref.get()
+state = doc.to_dict() if doc.exists else None
+
 if not state:
     if st.button("Start New Game"):
-        initialize_game()
+        game_ref.set({'players': [], 'roles': {}, 'scores': {}, 'round': 1, 'started': False})
         st.rerun()
 else:
-    player_name = st.text_input("Enter your name:")
-    if st.button("Join"):
-        if len(state['players']) < 4 and player_name not in state['players']:
-            game_ref.update({'players': firestore.ArrayUnion([player_name])})
-            game_ref.update({f"scores.{player_name}": 0})
-            st.rerun()
-
-    # --- 4. GAME ENGINE (PLAYING PHASE) ---
-    if len(state.get('players', [])) == 4:
-        # Auto-assign roles if not assigned
-        if not state['roles']:
-            roles = ['Raja', 'Mantri', 'Sipahi', 'Chor']
-            random.shuffle(roles)
-            role_map = {state['players'][i]: roles[i] for i in range(4)}
-            game_ref.set({'roles': role_map}, merge=True)
-            st.rerun()
-
-        my_role = state['roles'].get(player_name)
-        st.write(f"### Your Role: {my_role}")
-
-        if my_role == 'Sipahi' and state['round'] <= 50:
-            target = st.selectbox("Select target to catch:", [p for p in state['players'] if p != player_name])
-            if st.button("Catch!"):
-                # Logic: Check if target is Chor
-                target_role = state['roles'][target]
-                if target_role == 'Chor':
-                    game_ref.update({f"scores.{player_name}": firestore.Increment(500)})
-                    st.success("Caught the Chor! +500")
-                else:
-                    chor_name = [k for k, v in state['roles'].items() if v == 'Chor'][0]
-                    game_ref.update({f"scores.{chor_name}": firestore.Increment(500)})
-                    st.error(f"Wrong! That was {target_role}. Points to Chor.")
-                
-                # Increment Round
-                game_ref.update({'round': state['round'] + 1})
+    # --- LOBBY PHASE ---
+    if not state.get('started'):
+        st.subheader("Waiting Room")
+        st.write("Players joined:", ", ".join(state.get('players', [])))
+        
+        player_name = st.text_input("Enter your name to join:")
+        if st.button("Join"):
+            if player_name and player_name not in state.get('players', []):
+                game_ref.update({
+                    'players': firestore.ArrayUnion([player_name]),
+                    f"scores.{player_name}": 0
+                })
+                st.rerun()
+        
+        if len(state.get('players', [])) >= 2:
+            if st.button("Start Game Now!"):
+                players = state['players']
+                roles = ['Raja', 'Mantri', 'Sipahi', 'Chor']
+                selected_roles = roles[:len(players)]
+                random.shuffle(selected_roles)
+                role_map = {players[i]: selected_roles[i] for i in range(len(players))}
+                game_ref.update({'roles': role_map, 'started': True})
                 st.rerun()
 
-    # --- 5. RANKING SYSTEM ---
-    if state.get('round', 0) > 50:
-        st.balloons()
-        st.subheader("Final Rankings")
-        scores = state.get('scores', {})
-        sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-        st.table(sorted_scores)
+    # --- PLAYING PHASE ---
+    else:
+        player_name = st.text_input("Enter your name to play:")
+        my_role = state.get('roles', {}).get(player_name)
+        
+        if my_role:
+            st.write(f"### Your Role: {my_role}")
+
+            if my_role == 'Sipahi' and state.get('round', 1) <= 50:
+                targets = [p for p in state['players'] if p != player_name]
+                target = st.selectbox("Select target to catch:", targets)
+                
+                if st.button("Catch!"):
+                    target_role = state['roles'].get(target)
+                    if target_role == 'Chor':
+                        game_ref.update({f"scores.{player_name}": firestore.Increment(500)})
+                        st.success(f"Caught the Chor! {target} was the Chor. +500 pts.")
+                    else:
+                        chor_name = next((k for k, v in state['roles'].items() if v == 'Chor'), None)
+                        if chor_name:
+                            game_ref.update({f"scores.{chor_name}": firestore.Increment(500)})
+                        st.error(f"Wrong! That was {target_role}. Points to Chor.")
+                    
+                    game_ref.update({'round': state.get('round', 1) + 1})
+                    st.rerun()
+        
+        # --- RANKING ---
+        if state.get('round', 1) > 50:
+            st.balloons()
+            st.subheader("Final Rankings")
+            sorted_scores = sorted(state['scores'].items(), key=lambda x: x[1], reverse=True)
+            st.table(sorted_scores)
