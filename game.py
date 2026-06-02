@@ -44,11 +44,19 @@ else:
         if len(state.get('players', [])) >= 2:
             if st.button("Start Game Now!"):
                 players = state['players']
+                # --- START GAME LOGIC (FIXED) ---
+                players = state['players']
                 roles = ['Raja', 'Mantri', 'Sipahi', 'Chor']
+                
+                # Take only the needed number of roles
                 selected_roles = roles[:len(players)]
                 random.shuffle(selected_roles)
-                role_map = {players[i]: selected_roles[i] for i in range(len(players))}
-                game_ref.update({'roles': role_map, 'started': True})
+                
+                # ZIP pairs the two lists safely, no matter the length
+                role_map = dict(zip(players, selected_roles))
+                
+                # Use .set with merge to avoid 'nested path' ValueError
+                game_ref.set({'roles': role_map, 'started': True}, merge=True)
                 st.rerun()
 
     # --- PLAYING PHASE ---
