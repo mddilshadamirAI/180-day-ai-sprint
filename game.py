@@ -1,13 +1,21 @@
 import streamlit as st
 import firebase_admin
 from firebase_admin import credentials, firestore
-import random
-import time
+import json
 
-# --- 1. FIREBASE CONFIG ---
+# --- FIREBASE CONFIG ---
 if not firebase_admin._apps:
-    cred = credentials.Certificate("serviceAccountKey.json")
+    # If running on Streamlit Cloud, use st.secrets
+    if "firebase" in st.secrets:
+        # We store the JSON structure in a 'firebase' secret in Streamlit
+        cred_dict = dict(st.secrets["firebase"])
+        cred = credentials.Certificate(cred_dict)
+    else:
+        # If running locally on your PC, use the file
+        cred = credentials.Certificate("serviceAccountKey.json")
+        
     firebase_admin.initialize_app(cred)
+
 db = firestore.client()
 game_ref = db.collection('games').document('active_match')
 
