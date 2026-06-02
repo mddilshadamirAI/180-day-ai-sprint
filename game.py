@@ -14,74 +14,68 @@ if not firebase_admin._apps:
 
 db = firestore.client()
 
-st.title("👑 Raja Mantri Sipahi Chor")
-
-# --- 2. MATCHMAKER (ROOM SYSTEM) ---
+# --- 2. MATCHMAKER ---
 def get_room():
-    # Find any room that is not started and has < 4 players
-    rooms = db.collection('games').where('started', '==', False).stream()
+    # Find an open room
+    rooms = db.collection('games').where('started', '==', False).limit(1).stream()
     for room in rooms:
-        data = room.to_dict()
-        if len(data.get('players', [])) < 4:
-            return room
-    
-    # If no room found, create a new one
+        return room.reference
+    # Create a new room if none exists
     new_room = db.collection('games').document()
-    new_room.set({
-        'players': [], 'roles': {}, 'scores': {}, 
-        'started': False, 'round': 1
-    })
-    return new_room.get()
+    new_room.set({'players': [], 'roles': {}, 'scores': {}, 'started': False, 'round': 1})
+    return new_room
 
-doc = get_room()
-game_ref = doc.reference
-state = doc.to_dict()
+game_ref = get_room()
+state = game_ref.get().to_dict()
 
-# --- 3. LOBBY ---
+st.title("👑 Raja Mantri Sipahi Chor")
+st.write(f"Room ID: {game_ref.id}")
+
+# --- 3. LOBBY PHASE ---
 if not state.get('started'):
-    st.write(f"Room ID: {game_ref.id}")
     players = state.get('players', [])
     st.write(f"Players: {', '.join(players)}")
     
-    name = st.text_input("Enter your name:")
+    player_name = st.text_input("Enter your name:")
     if st.button("Join"):
-        if name and name not in players:
-            # Simple list update, no path nesting
-            players.append(name)
-            game_ref.update({'players': players})
+        if player_name and player_name not in players and len(players) < 4:
+            game_ref.update({'players': players + [player_name]})
             st.rerun()
             
     if len(players) >= 2 and st.button("Start Game"):
         roles = ['Raja', 'Mantri', 'Sipahi', 'Chor']
         random.shuffle(roles)
-        # Fill empty spots with 'Bot'
+        # Pad with bots to ensure 4 total
         all_p = players + [f"Bot_{i}" for i in range(4 - len(players))]
         role_map = dict(zip(all_p, roles))
-        game_ref.update({'roles': role_map, 'started': True})
+        game_ref.set({'roles': role_map, 'started': True}, merge=True)
         st.rerun()
 
-# --- 4. GAME ENGINE ---
+# --- 4. PLAYING PHASE ---
 else:
-    name = st.text_input("Enter your name to play:")
+    my_name = st.text_input("Enter your name to play:")
     roles = state.get('roles', {})
-    my_role = roles.get(name)
+    my_role = roles.get(my_name)
     
     if my_role:
-        st.write(f"### Role: {my_role}")
-        if my_role == 'Sipahi':
-            target = st.selectbox("Catch:", [p for p in roles.keys() if p != name])
+        st.write(f"### Your Role: {my_role}")
+        # Sipahi can only play if they are a human
+        if my_role == 'Sipahi' and state.get('round', 1) <= 50:
+            targets = [p for p in roles.keys() if p != my_name]
+            target = st.selectbox("Catch:", targets)
             if st.button("Catch!"):
                 scores = state.get('scores', {})
                 if roles.get(target) == 'Chor':
-                    scores[name] = scores.get(name, 0) + 500
-                    st.success("Caught!")
+                    scores[my_name] = scores.get(my_name, 0) + 500
                 else:
                     chor = next((k for k, v in roles.items() if v == 'Chor'), "Chor")
                     scores[chor] = scores.get(chor, 0) + 500
-                    st.error("Wrong!")
                 game_ref.update({'scores': scores, 'round': state.get('round', 1) + 1})
                 st.rerun()
-    
+    else:
+        st.warning("Waiting for game data...")
+
+    # --- 5. RANKING ---
     if state.get('round', 1) > 50:
         st.subheader("Leaderboard")
         st.table(sorted(state.get('scores', {}).items(), key=lambda x: x[1], reverse=True))
