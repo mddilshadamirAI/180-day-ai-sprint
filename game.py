@@ -51,7 +51,7 @@ else:
             roles = ['Raja', 'Mantri', 'Sipahi', 'Chor']
             random.shuffle(roles)
             role_map = {state['players'][i]: roles[i] for i in range(4)}
-            game_ref.update({'roles': role_map})
+            game_ref.set({'roles': role_map}, merge=True)
             st.rerun()
 
         my_role = state['roles'].get(player_name)
