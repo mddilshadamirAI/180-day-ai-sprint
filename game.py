@@ -19,40 +19,44 @@ st.title("👑 Raja Mantri Sipahi Chor")
 
 # --- 2. DATA FETCH ---
 doc = game_ref.get()
-state = doc.to_dict() if doc.exists else {'players': [], 'roles': {}, 'scores': {}, 'round': 1, 'started': False}
+state = doc.to_dict() if doc.exists else {
+    'players': [], 'roles': {}, 'scores': {}, 'round': 1, 'started': False
+}
 
-# --- 3. LOBBY / JOINING ---
+# --- 3. AUTO-RESET (If game ends) ---
+if state.get('round', 0) > 50:
+    game_ref.set({'players': [], 'roles': {}, 'scores': {}, 'round': 1, 'started': False}, merge=True)
+    st.rerun()
+
+# --- 4. LOBBY / JOINING ---
 if not state.get('started', False):
     st.subheader("Waiting Room")
     players = state.get('players', [])
-    st.write("Players joined:", ", ".join(players))
+    st.write(f"Players joined: {', '.join(players)}")
     
     player_name = st.text_input("Enter your name:")
     if st.button("Join"):
         if player_name and player_name not in players:
-            # Safe way to update lists and scores
-            new_players = players + [player_name]
+            # Use merge=True to prevent path errors
             game_ref.set({
-                'players': new_players,
+                'players': players + [player_name],
                 f"scores.{player_name}": 0
             }, merge=True)
             st.rerun()
             
     if len(players) >= 2:
         if st.button("Start Game Now!"):
-            # Create Roles
             roles = ['Raja', 'Mantri', 'Sipahi', 'Chor']
             random.shuffle(roles)
-            
-            # Map players + fill missing slots with Bots
-            role_map = {p: roles[i] for i, p in enumerate(players)}
-            for i in range(len(players), 4):
-                role_map[f"Bot {i}"] = roles[i]
+            # Create a full list of 4: players + bots
+            all_participants = players + [f"Bot {i}" for i in range(4 - len(players))]
+            # Pair them using zip (Safe from IndexError)
+            role_map = dict(zip(all_participants, roles))
             
             game_ref.set({'roles': role_map, 'started': True}, merge=True)
             st.rerun()
 
-# --- 4. PLAYING PHASE ---
+# --- 5. PLAYING PHASE ---
 else:
     player_name = st.text_input("Confirm your name to play:")
     roles = state.get('roles', {})
@@ -62,7 +66,6 @@ else:
         st.write(f"### Your Role: {my_role}")
         
         if my_role == 'Sipahi':
-            # Filter targets (only human players or bots)
             targets = [p for p in roles.keys() if p != player_name]
             target = st.selectbox("Select target to catch:", targets)
             
@@ -71,19 +74,18 @@ else:
                     game_ref.set({f"scores.{player_name}": firestore.Increment(500)}, merge=True)
                     st.success(f"Caught the Chor! {target} was the Chor.")
                 else:
-                    chor_name = next((k for k, v in roles.items() if v == 'Chor'), None)
-                    if chor_name:
-                        game_ref.set({f"scores.{chor_name}": firestore.Increment(500)}, merge=True)
-                    st.error(f"Wrong! {target} was the {roles.get(target)}.")
+                    chor = next((k for k, v in roles.items() if v == 'Chor'), "Chor")
+                    game_ref.set({f"scores.{chor}": firestore.Increment(500)}, merge=True)
+                    st.error(f"Wrong! {target} was {roles.get(target)}.")
                 
                 game_ref.set({'round': state.get('round', 1) + 1}, merge=True)
                 st.rerun()
     else:
         st.warning("Please enter your registered name.")
 
-    # --- 5. RANKING ---
-    if state.get('round', 1) > 50:
-        st.subheader("Final Rankings")
-        scores = state.get('scores', {})
-        sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-        st.table(sorted_scores)
+    # --- 6. LEADERBOARD ---
+    st.divider()
+    st.subheader("Leaderboard")
+    scores = state.get('scores', {})
+    sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    st.table(sorted_scores)
