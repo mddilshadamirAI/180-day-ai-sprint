@@ -13,79 +13,75 @@ if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
-game_ref = db.collection('games').document('active_match')
 
 st.title("👑 Raja Mantri Sipahi Chor")
 
-# --- 2. DATA FETCH ---
-doc = game_ref.get()
-state = doc.to_dict() if doc.exists else {
-    'players': [], 'roles': {}, 'scores': {}, 'round': 1, 'started': False
-}
-
-# --- 3. AUTO-RESET (If game ends) ---
-if state.get('round', 0) > 50:
-    game_ref.set({'players': [], 'roles': {}, 'scores': {}, 'round': 1, 'started': False}, merge=True)
-    st.rerun()
-
-# --- 4. LOBBY / JOINING ---
-if not state.get('started', False):
-    st.subheader("Waiting Room")
-    players = state.get('players', [])
-    st.write(f"Players joined: {', '.join(players)}")
+# --- 2. MATCHMAKER (ROOM SYSTEM) ---
+def get_room():
+    # Find any room that is not started and has < 4 players
+    rooms = db.collection('games').where('started', '==', False).stream()
+    for room in rooms:
+        data = room.to_dict()
+        if len(data.get('players', [])) < 4:
+            return room
     
-    player_name = st.text_input("Enter your name:")
-    if st.button("Join"):
-        if player_name and player_name not in players:
-            # Use merge=True to prevent path errors
-            game_ref.set({
-                'players': players + [player_name],
-                f"scores.{player_name}": 0
-            }, merge=True)
-            st.rerun()
-            
-    if len(players) >= 2:
-        if st.button("Start Game Now!"):
-            roles = ['Raja', 'Mantri', 'Sipahi', 'Chor']
-            random.shuffle(roles)
-            # Create a full list of 4: players + bots
-            all_participants = players + [f"Bot {i}" for i in range(4 - len(players))]
-            # Pair them using zip (Safe from IndexError)
-            role_map = dict(zip(all_participants, roles))
-            
-            game_ref.set({'roles': role_map, 'started': True}, merge=True)
-            st.rerun()
+    # If no room found, create a new one
+    new_room = db.collection('games').document()
+    new_room.set({
+        'players': [], 'roles': {}, 'scores': {}, 
+        'started': False, 'round': 1
+    })
+    return new_room.get()
 
-# --- 5. PLAYING PHASE ---
+doc = get_room()
+game_ref = doc.reference
+state = doc.to_dict()
+
+# --- 3. LOBBY ---
+if not state.get('started'):
+    st.write(f"Room ID: {game_ref.id}")
+    players = state.get('players', [])
+    st.write(f"Players: {', '.join(players)}")
+    
+    name = st.text_input("Enter your name:")
+    if st.button("Join"):
+        if name and name not in players:
+            # Simple list update, no path nesting
+            players.append(name)
+            game_ref.update({'players': players})
+            st.rerun()
+            
+    if len(players) >= 2 and st.button("Start Game"):
+        roles = ['Raja', 'Mantri', 'Sipahi', 'Chor']
+        random.shuffle(roles)
+        # Fill empty spots with 'Bot'
+        all_p = players + [f"Bot_{i}" for i in range(4 - len(players))]
+        role_map = dict(zip(all_p, roles))
+        game_ref.update({'roles': role_map, 'started': True})
+        st.rerun()
+
+# --- 4. GAME ENGINE ---
 else:
-    player_name = st.text_input("Confirm your name to play:")
+    name = st.text_input("Enter your name to play:")
     roles = state.get('roles', {})
-    my_role = roles.get(player_name)
+    my_role = roles.get(name)
     
     if my_role:
-        st.write(f"### Your Role: {my_role}")
-        
+        st.write(f"### Role: {my_role}")
         if my_role == 'Sipahi':
-            targets = [p for p in roles.keys() if p != player_name]
-            target = st.selectbox("Select target to catch:", targets)
-            
+            target = st.selectbox("Catch:", [p for p in roles.keys() if p != name])
             if st.button("Catch!"):
+                scores = state.get('scores', {})
                 if roles.get(target) == 'Chor':
-                    game_ref.set({f"scores.{player_name}": firestore.Increment(500)}, merge=True)
-                    st.success(f"Caught the Chor! {target} was the Chor.")
+                    scores[name] = scores.get(name, 0) + 500
+                    st.success("Caught!")
                 else:
                     chor = next((k for k, v in roles.items() if v == 'Chor'), "Chor")
-                    game_ref.set({f"scores.{chor}": firestore.Increment(500)}, merge=True)
-                    st.error(f"Wrong! {target} was {roles.get(target)}.")
-                
-                game_ref.set({'round': state.get('round', 1) + 1}, merge=True)
+                    scores[chor] = scores.get(chor, 0) + 500
+                    st.error("Wrong!")
+                game_ref.update({'scores': scores, 'round': state.get('round', 1) + 1})
                 st.rerun()
-    else:
-        st.warning("Please enter your registered name.")
-
-    # --- 6. LEADERBOARD ---
-    st.divider()
-    st.subheader("Leaderboard")
-    scores = state.get('scores', {})
-    sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-    st.table(sorted_scores)
+    
+    if state.get('round', 1) > 50:
+        st.subheader("Leaderboard")
+        st.table(sorted(state.get('scores', {}).items(), key=lambda x: x[1], reverse=True))
