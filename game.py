@@ -28,7 +28,7 @@ def get_room():
 game_ref = get_room()
 state = game_ref.get().to_dict()
 
-st.title("👑 Raja Mantri Sipahi Chor")
+st.title("👑 Raja Raaj Karta Hai")
 st.write(f"Room ID: {game_ref.id}")
 
 # --- 3. LOBBY PHASE ---
