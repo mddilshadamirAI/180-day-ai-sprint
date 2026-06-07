@@ -20,7 +20,6 @@ room_id = st.text_input("Enter Private Room ID:", value="default_room")
 game_ref = db.collection('games').document(room_id)
 doc = game_ref.get()
 
-# Initialize or Fetch State
 if not doc.exists:
     state = {'players': [], 'roles': {}, 'scores': {}, 'started': False, 'round': 1}
     game_ref.set(state)
@@ -55,17 +54,19 @@ else:
     if my_role:
         st.write(f"### Your Role: {my_role}")
         
-        # Raja Visibility: Allows Raja to see all roles in a private toggle
+        # Raja Visibility
         if my_role == 'Raja':
             with st.expander("👑 Raja's Secret View"):
                 st.json(roles)
 
-        # Game Logic (Sipahi Catch)
-        if st.button("Catch!"):
+        # Sipahi Catch Logic
+        if my_role == 'Sipahi' and state.get('round', 1) <= 50:
+            targets = [p for p in roles.keys() if p != my_name]
+            target = st.selectbox("Select target to catch:", targets)
+            
+            if st.button("Catch!"):
                 scores = state.get('scores', {})
-                current_round = state.get('round', 1)
-                
-                # Scoring Logic
+                # Logic to handle catch
                 if roles.get(target) == 'Chor':
                     scores[my_name] = scores.get(my_name, 0) + 500
                     st.success(f"Caught the Chor! {target} was the Chor.")
@@ -74,25 +75,23 @@ else:
                     scores[chor] = scores.get(chor, 0) + 500
                     st.error(f"Wrong! {target} was the {roles.get(target)}.")
                 
-                # --- ROUND RESET LOGIC ---
-                # Shuffle new roles for the next round
-                new_role_pool = ['Raja', 'Mantri', 'Sipahi', 'Chor']
-                random.shuffle(new_role_pool)
+                # Shuffle for next round
+                new_pool = ['Raja', 'Mantri', 'Sipahi', 'Chor']
+                random.shuffle(new_pool)
                 players = state.get('players', [])
                 all_p = players + [f"Bot_{i}" for i in range(4 - len(players))]
-                new_role_map = dict(zip(all_p, new_role_pool))
+                new_roles = dict(zip(all_p, new_pool))
                 
-                # Update scores, round, and new roles
                 game_ref.update({
                     'scores': scores, 
-                    'round': current_round + 1,
-                    'roles': new_role_map
+                    'round': state.get('round', 1) + 1,
+                    'roles': new_roles
                 })
                 st.rerun()
     else:
         st.warning("You are not part of this active game.")
 
-    # --- 5. RANKING (Round 50+) ---
+    # --- 5. RANKING ---
     if state.get('round', 1) > 50:
         st.balloons()
         st.subheader("Final Rankings")
