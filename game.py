@@ -3,7 +3,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import random
 
-# --- 1. FIREBASE CONFIG ---
+# --- 1. FIREBASE INITIALIZATION ---
 if not firebase_admin._apps:
     if "firebase" in st.secrets:
         cred_dict = dict(st.secrets["firebase"])
@@ -14,17 +14,16 @@ if not firebase_admin._apps:
 
 db = firestore.client()
 
-# --- 2. ROOM MANAGEMENT ---
-# Allow players to enter a specific room ID to keep games private
+# --- 2. ROOM & STATE MANAGEMENT ---
 st.title("👑 Raja Mantri Sipahi Chor")
-room_id = st.text_input("Enter Room ID (or create one):", value="default_room")
+room_id = st.text_input("Enter Private Room ID:", value="default_room")
 game_ref = db.collection('games').document(room_id)
 doc = game_ref.get()
 
-# Initialize room if it doesn't exist
+# Initialize or Fetch State
 if not doc.exists:
-    game_ref.set({'players': [], 'roles': {}, 'scores': {}, 'started': False, 'round': 1})
     state = {'players': [], 'roles': {}, 'scores': {}, 'started': False, 'round': 1}
+    game_ref.set(state)
 else:
     state = doc.to_dict()
 
@@ -56,16 +55,16 @@ else:
     if my_role:
         st.write(f"### Your Role: {my_role}")
         
-        # Reveal roles to the Raja after a catch
-        if st.checkbox("See all roles (Raja only)"):
-            if my_role == 'Raja':
+        # Raja Visibility: Allows Raja to see all roles in a private toggle
+        if my_role == 'Raja':
+            with st.expander("👑 Raja's Secret View"):
                 st.json(roles)
-            else:
-                st.error("Only the Raja can see all roles!")
 
+        # Game Logic (Sipahi Catch)
         if my_role == 'Sipahi' and state.get('round', 1) <= 50:
             targets = [p for p in roles.keys() if p != my_name]
             target = st.selectbox("Select target to catch:", targets)
+            
             if st.button("Catch!"):
                 scores = state.get('scores', {})
                 if roles.get(target) == 'Chor':
@@ -75,15 +74,18 @@ else:
                     chor = next((k for k, v in roles.items() if v == 'Chor'), "Chor")
                     scores[chor] = scores.get(chor, 0) + 500
                     st.error(f"Wrong! {target} was the {roles.get(target)}.")
+                
                 game_ref.update({'scores': scores, 'round': state.get('round', 1) + 1})
                 st.rerun()
-    
-    # --- 5. GAME END / RANKING ---
+    else:
+        st.warning("You are not part of this active game.")
+
+    # --- 5. RANKING (Round 50+) ---
     if state.get('round', 1) > 50:
         st.balloons()
         st.subheader("Final Rankings")
         sorted_scores = sorted(state.get('scores', {}).items(), key=lambda x: x[1], reverse=True)
         st.table(sorted_scores)
-        if st.button("Play Again?"):
+        if st.button("Start New Game"):
             game_ref.set({'players': [], 'roles': {}, 'scores': {}, 'started': False, 'round': 1})
             st.rerun()
