@@ -1,7 +1,7 @@
 <div align="center">
 
 # 🚀 180-DAY AI ENGINEERING SPRINT
-### From Student to Agentic AI Founder: A Journey of High-Intensity Development
+### From Student to AI Engineer: A Journey of High-Intensity Development.
 
 [**LinkedIn**](https://linkedin.com/in/md-dilshad-amir-4bb505401/) • [**YouTube**](https://www.youtube.com/@MdDilshadAmir) • [**Portfolio**](https://mddilshadamirai.github.io/)
 
