@@ -1,0 +1,3773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MEN'S GROOMING — Premium Men's Salon</title>
+
+<meta name="description" content="Premium men's salon and grooming experience. Haircuts, beard styling, shaving, facials and complete men's grooming.">
+<meta name="theme-color" content="#0b0b0b">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root{
+    --black:#090909;
+    --black2:#111111;
+    --black3:#171717;
+    --charcoal:#202020;
+
+    --white:#f5f3ef;
+    --cream:#e8e0d4;
+
+    --gold:#b89458;
+    --gold2:#d1b47b;
+    --gold3:#8f6d3d;
+
+    --muted:#898580;
+    --muted2:#5e5b57;
+
+    --border:rgba(255,255,255,.10);
+
+    --shadow:0 30px 80px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--black);
+    color:var(--white);
+    font-family:"DM Sans",sans-serif;
+    overflow-x:hidden;
+}
+
+body,
+button,
+input,
+select,
+textarea{
+    font-family:"DM Sans",sans-serif;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+img{
+    width:100%;
+    display:block;
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:#070707;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:opacity .8s ease, visibility .8s ease;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-inner{
+    text-align:center;
+}
+
+.loader-symbol{
+    width:65px;
+    height:65px;
+    border:1px solid rgba(255,255,255,.25);
+    border-top-color:var(--gold2);
+    transform:rotate(45deg);
+    margin:auto auto 28px;
+    animation:loaderSpin 1.3s linear infinite;
+}
+
+.loader-symbol::after{
+    content:"M";
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100%;
+    transform:rotate(-45deg);
+    font-family:"Barlow Condensed",sans-serif;
+    font-size:28px;
+    color:var(--gold2);
+}
+
+.loader p{
+    color:#777;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:5px;
+}
+
+@keyframes loaderSpin{
+    to{
+        transform:rotate(405deg);
+    }
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+    color:white;
+    transition:.4s ease;
+}
+
+.navbar.scrolled{
+    background:rgba(8,8,8,.94);
+    backdrop-filter:blur(18px);
+    box-shadow:0 15px 50px rgba(0,0,0,.35);
+}
+
+.nav-inner{
+    width:min(1400px,92%);
+    height:88px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.logo-mark{
+    width:38px;
+    height:38px;
+    border:1px solid var(--gold2);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transform:rotate(45deg);
+}
+
+.logo-mark span{
+    transform:rotate(-45deg);
+    color:var(--gold2);
+    font-family:"Barlow Condensed",sans-serif;
+    font-size:25px;
+    font-weight:600;
+}
+
+.logo-text{
+    font-family:"Barlow Condensed",sans-serif;
+    font-size:25px;
+    font-weight:700;
+    letter-spacing:3px;
+}
+
+.logo-text small{
+    display:block;
+    color:#8d8881;
+    font-family:"DM Sans",sans-serif;
+    font-size:7px;
+    letter-spacing:3px;
+    margin-top:-2px;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:33px;
+}
+
+.nav-links a{
+    position:relative;
+
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:2.5px;
+
+    color:#cfcac4;
+}
+
+.nav-links a::after{
+    content:"";
+
+    position:absolute;
+    left:0;
+    bottom:-9px;
+
+    width:0;
+    height:1px;
+
+    background:var(--gold2);
+
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:white;
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
+
+.nav-book{
+    padding:14px 22px;
+
+    border:1px solid rgba(209,180,123,.55);
+
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+
+    transition:.3s;
+}
+
+.nav-book:hover{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:white;
+}
+
+.menu-btn{
+    display:none;
+
+    background:none;
+    border:0;
+
+    color:white;
+    font-size:26px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    min-height:100vh;
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(5,5,5,.94) 0%,
+            rgba(5,5,5,.75) 40%,
+            rgba(5,5,5,.25) 75%,
+            rgba(5,5,5,.30) 100%
+        ),
+        url("https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=2200&q=90")
+        center/cover no-repeat;
+}
+
+.hero::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            transparent 70%,
+            rgba(0,0,0,.65)
+        );
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+
+    width:min(1400px,92%);
+    margin:auto;
+
+    padding-top:80px;
+}
+
+.hero-kicker{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    color:var(--gold2);
+
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:5px;
+
+    margin-bottom:24px;
+}
+
+.hero-kicker::before{
+    content:"";
+
+    width:45px;
+    height:1px;
+
+    background:var(--gold2);
+}
+
+.hero h1{
+    max-width:850px;
+
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:clamp(75px,10vw,155px);
+
+    line-height:.78;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:-3px;
+}
+
+.hero h1 span{
+    color:var(--gold2);
+}
+
+.hero-subtitle{
+    max-width:520px;
+
+    margin-top:35px;
+
+    color:#bcb8b2;
+
+    font-size:13px;
+
+    line-height:1.9;
+
+    font-weight:300;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:14px;
+
+    margin-top:37px;
+}
+
+.btn{
+    min-height:53px;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:0 28px;
+
+    font-size:9px;
+
+    text-transform:uppercase;
+    letter-spacing:2px;
+
+    transition:.35s;
+
+    border:1px solid transparent;
+}
+
+.btn-gold{
+    background:var(--gold);
+    color:white;
+}
+
+.btn-gold:hover{
+    background:#a07c48;
+    transform:translateY(-3px);
+}
+
+.btn-outline{
+    border-color:rgba(255,255,255,.35);
+    color:white;
+}
+
+.btn-outline:hover{
+    background:white;
+    color:#111;
+}
+
+.hero-number{
+    position:absolute;
+
+    right:5%;
+    bottom:70px;
+
+    z-index:2;
+
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:100px;
+
+    font-weight:700;
+
+    color:rgba(255,255,255,.06);
+}
+
+.hero-scroll{
+    position:absolute;
+
+    left:4%;
+    bottom:35px;
+
+    z-index:2;
+
+    display:flex;
+    align-items:center;
+    gap:13px;
+
+    color:#8b8782;
+
+    font-size:8px;
+    text-transform:uppercase;
+    letter-spacing:3px;
+}
+
+.scroll-line{
+    width:55px;
+    height:1px;
+    background:#777;
+}
+
+
+/* =========================================================
+   COMMON
+========================================================= */
+
+.section{
+    padding:120px 0;
+}
+
+.container{
+    width:min(1200px,90%);
+    margin:auto;
+}
+
+.eyebrow{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    color:var(--gold2);
+
+    font-size:9px;
+
+    text-transform:uppercase;
+    letter-spacing:4px;
+
+    margin-bottom:17px;
+}
+
+.eyebrow::before{
+    content:"";
+
+    width:32px;
+    height:1px;
+
+    background:var(--gold2);
+}
+
+.section-title{
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:clamp(55px,7vw,90px);
+
+    line-height:.83;
+
+    text-transform:uppercase;
+
+    font-weight:600;
+
+    letter-spacing:-1px;
+}
+
+.section-title span{
+    color:var(--gold2);
+}
+
+.section-description{
+    max-width:580px;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.9;
+
+    margin-top:23px;
+}
+
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+
+    transition:1s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about{
+    background:#111;
+}
+
+.about-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:100px;
+
+    align-items:center;
+}
+
+.about-image{
+    position:relative;
+
+    padding:18px;
+}
+
+.about-image::before{
+    content:"";
+
+    position:absolute;
+
+    inset:0 45px 45px 0;
+
+    border:1px solid var(--gold3);
+}
+
+.about-image img{
+    position:relative;
+    z-index:1;
+
+    height:600px;
+
+    object-fit:cover;
+
+    filter:saturate(.8);
+}
+
+.about-badge{
+    position:absolute;
+
+    right:-5px;
+    bottom:30px;
+
+    z-index:2;
+
+    background:var(--gold);
+
+    padding:22px 25px;
+
+    color:white;
+}
+
+.about-badge strong{
+    display:block;
+
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:43px;
+
+    line-height:.8;
+}
+
+.about-badge span{
+    display:block;
+
+    font-size:7px;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    margin-top:9px;
+}
+
+.about-copy p{
+    color:#898681;
+
+    font-size:13px;
+
+    line-height:1.9;
+
+    margin-top:25px;
+}
+
+.about-signature{
+    margin-top:30px;
+
+    color:var(--gold2);
+
+    font-family:"Barlow Condensed",sans-serif;
+
+    text-transform:uppercase;
+
+    letter-spacing:4px;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+    background:#080808;
+
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+
+    padding:55px 0;
+}
+
+.stats-grid{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+}
+
+.stat{
+    text-align:center;
+
+    border-right:1px solid var(--border);
+
+    padding:10px 20px;
+}
+
+.stat:last-child{
+    border:0;
+}
+
+.stat-number{
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:58px;
+
+    line-height:1;
+
+    color:var(--gold2);
+
+    font-weight:600;
+}
+
+.stat-label{
+    margin-top:8px;
+
+    color:#77736e;
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+}
+
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services{
+    background:#f0ece6;
+
+    color:#171514;
+}
+
+.services .eyebrow{
+    color:var(--gold3);
+}
+
+.services .eyebrow::before{
+    background:var(--gold3);
+}
+
+.services .section-description{
+    color:#77716b;
+}
+
+.services-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    margin-top:60px;
+
+    border-top:1px solid rgba(0,0,0,.12);
+    border-left:1px solid rgba(0,0,0,.12);
+}
+
+.service{
+    min-height:310px;
+
+    position:relative;
+
+    padding:40px 35px;
+
+    border-right:1px solid rgba(0,0,0,.12);
+    border-bottom:1px solid rgba(0,0,0,.12);
+
+    background:#f0ece6;
+
+    transition:.4s;
+}
+
+.service:hover{
+    background:#fff;
+
+    transform:translateY(-4px);
+
+    box-shadow:0 25px 60px rgba(0,0,0,.12);
+
+    z-index:2;
+}
+
+.service-number{
+    position:absolute;
+
+    right:25px;
+    top:20px;
+
+    color:#d4cdc4;
+
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:45px;
+}
+
+.service-icon{
+    width:48px;
+    height:48px;
+
+    border:1px solid var(--gold3);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:var(--gold3);
+
+    font-size:20px;
+
+    margin-bottom:28px;
+}
+
+.service h3{
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:32px;
+
+    text-transform:uppercase;
+
+    font-weight:600;
+}
+
+.service p{
+    color:#77716b;
+
+    font-size:11px;
+
+    line-height:1.8;
+
+    margin-top:12px;
+}
+
+.service-link{
+    display:inline-block;
+
+    margin-top:20px;
+
+    color:var(--gold3);
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+}
+
+
+/* =========================================================
+   DARK FEATURE
+========================================================= */
+
+.feature{
+    min-height:620px;
+
+    display:flex;
+    align-items:center;
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(5,5,5,.94),
+            rgba(5,5,5,.55),
+            rgba(5,5,5,.15)
+        ),
+        url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=2200&q=90")
+        center/cover no-repeat;
+}
+
+.feature-content{
+    width:min(1200px,90%);
+    margin:auto;
+}
+
+.feature .section-title{
+    max-width:700px;
+}
+
+.feature-description{
+    max-width:520px;
+
+    color:#a8a39e;
+
+    font-size:13px;
+
+    line-height:1.9;
+
+    margin:25px 0 35px;
+}
+
+
+/* =========================================================
+   PACKAGES
+========================================================= */
+
+.packages{
+    background:#0d0d0d;
+}
+
+.package-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+    margin-top:60px;
+}
+
+.package{
+    position:relative;
+
+    padding:40px 35px;
+
+    background:#151515;
+
+    border:1px solid var(--border);
+
+    transition:.4s;
+}
+
+.package:hover{
+    transform:translateY(-7px);
+
+    box-shadow:var(--shadow);
+}
+
+.package.featured{
+    background:
+        linear-gradient(
+            145deg,
+            #1e1a15,
+            #111
+        );
+
+    border-color:rgba(184,148,88,.55);
+
+    transform:translateY(-15px);
+}
+
+.package.featured:hover{
+    transform:translateY(-22px);
+}
+
+.package-tag{
+    position:absolute;
+
+    top:0;
+    right:0;
+
+    background:var(--gold);
+
+    padding:9px 15px;
+
+    font-size:7px;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+}
+
+.package-name{
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:35px;
+
+    text-transform:uppercase;
+}
+
+.package-description{
+    color:#77736e;
+
+    font-size:10px;
+
+    line-height:1.7;
+
+    margin-top:9px;
+}
+
+.package-price{
+    margin:30px 0;
+
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:58px;
+
+    color:var(--gold2);
+
+    line-height:1;
+}
+
+.package-price small{
+    font-family:"DM Sans",sans-serif;
+
+    font-size:9px;
+
+    color:#68635e;
+}
+
+.package-list{
+    list-style:none;
+
+    border-top:1px solid var(--border);
+
+    padding-top:20px;
+}
+
+.package-list li{
+    color:#918c86;
+
+    font-size:10px;
+
+    padding:9px 0;
+
+    display:flex;
+
+    gap:10px;
+}
+
+.package-list li::before{
+    content:"✓";
+
+    color:var(--gold2);
+}
+
+.package .btn{
+    width:100%;
+
+    margin-top:22px;
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery{
+    background:#111;
+}
+
+.gallery-grid{
+    margin-top:60px;
+
+    display:grid;
+
+    grid-template-columns:1.1fr .8fr .8fr;
+
+    grid-template-rows:290px 290px;
+
+    gap:9px;
+}
+
+.gallery-item{
+    position:relative;
+
+    overflow:hidden;
+}
+
+.gallery-item:first-child{
+    grid-row:span 2;
+}
+
+.gallery-item img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:grayscale(.15);
+
+    transition:.7s;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.08);
+    filter:grayscale(0);
+}
+
+.gallery-overlay{
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+    align-items:flex-end;
+
+    padding:25px;
+
+    background:linear-gradient(
+        transparent,
+        rgba(0,0,0,.8)
+    );
+
+    opacity:0;
+
+    transition:.4s;
+}
+
+.gallery-item:hover .gallery-overlay{
+    opacity:1;
+}
+
+.gallery-overlay span{
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:27px;
+
+    text-transform:uppercase;
+
+    color:white;
+}
+
+
+/* =========================================================
+   BARBERS
+========================================================= */
+
+.barbers{
+    background:#151515;
+}
+
+.barber-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+    margin-top:60px;
+}
+
+.barber-card{
+    background:#0d0d0d;
+
+    border:1px solid var(--border);
+
+    overflow:hidden;
+}
+
+.barber-image{
+    height:450px;
+
+    overflow:hidden;
+}
+
+.barber-image img{
+    height:100%;
+
+    object-fit:cover;
+
+    filter:grayscale(.2);
+
+    transition:.6s;
+}
+
+.barber-card:hover img{
+    transform:scale(1.04);
+
+    filter:grayscale(0);
+}
+
+.barber-info{
+    padding:22px 25px;
+}
+
+.barber-info h3{
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:30px;
+
+    text-transform:uppercase;
+}
+
+.barber-info p{
+    color:var(--gold2);
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    text-transform:uppercase;
+
+    margin-top:5px;
+}
+
+
+/* =========================================================
+   TESTIMONIAL
+========================================================= */
+
+.testimonial{
+    padding:130px 0;
+
+    background:
+        linear-gradient(
+            rgba(8,8,8,.88),
+            rgba(8,8,8,.95)
+        ),
+        url("https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=2200&q=80")
+        center/cover;
+
+    text-align:center;
+}
+
+.quote-mark{
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:90px;
+
+    color:var(--gold2);
+
+    height:55px;
+}
+
+blockquote{
+    max-width:900px;
+
+    margin:25px auto;
+
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:clamp(40px,5vw,70px);
+
+    line-height:.95;
+
+    text-transform:uppercase;
+
+    font-weight:400;
+}
+
+.stars{
+    color:var(--gold2);
+
+    letter-spacing:6px;
+
+    margin-top:25px;
+}
+
+.client{
+    margin-top:18px;
+
+    color:#77736d;
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+}
+
+
+/* =========================================================
+   BOOKING
+========================================================= */
+
+.booking{
+    background:#e9e3da;
+
+    color:#171514;
+}
+
+.booking-grid{
+    display:grid;
+
+    grid-template-columns:.85fr 1.15fr;
+
+    gap:90px;
+
+    align-items:start;
+}
+
+.booking .eyebrow{
+    color:var(--gold3);
+}
+
+.booking .eyebrow::before{
+    background:var(--gold3);
+}
+
+.booking .section-description{
+    color:#746e68;
+}
+
+.contact-info{
+    margin-top:35px;
+}
+
+.contact-row{
+    display:flex;
+
+    gap:15px;
+
+    padding:17px 0;
+
+    border-bottom:1px solid rgba(0,0,0,.12);
+}
+
+.contact-icon{
+    width:38px;
+    height:38px;
+
+    border:1px solid #aa8a59;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:var(--gold3);
+
+    flex-shrink:0;
+}
+
+.contact-row small{
+    display:block;
+
+    color:#817970;
+
+    font-size:7px;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    margin-bottom:4px;
+}
+
+.contact-row strong{
+    font-size:12px;
+
+    font-weight:500;
+}
+
+.booking-form{
+    background:#111;
+
+    color:white;
+
+    padding:45px;
+
+    box-shadow:var(--shadow);
+}
+
+.booking-form h3{
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:38px;
+
+    text-transform:uppercase;
+
+    margin-bottom:30px;
+}
+
+.form-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+
+    gap:8px;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+.form-group label{
+    color:#77736e;
+
+    font-size:7px;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+
+    border:0;
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+    outline:0;
+
+    background:transparent;
+
+    color:white;
+
+    padding:12px 0;
+
+    font-size:11px;
+
+    transition:.3s;
+}
+
+.form-group select option{
+    background:#111;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:var(--gold2);
+}
+
+.form-group textarea{
+    min-height:85px;
+
+    resize:vertical;
+}
+
+.booking-form .btn{
+    width:100%;
+
+    margin-top:25px;
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+.map{
+    min-height:440px;
+
+    position:relative;
+
+    background:
+        linear-gradient(
+            rgba(8,8,8,.45),
+            rgba(8,8,8,.55)
+        ),
+        url("https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=2200&q=85")
+        center/cover;
+}
+
+.map-card{
+    position:absolute;
+
+    left:7%;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:330px;
+
+    padding:35px;
+
+    background:rgba(10,10,10,.95);
+
+    border-left:2px solid var(--gold);
+
+    box-shadow:var(--shadow);
+}
+
+.map-card h3{
+    font-family:"Barlow Condensed",sans-serif;
+
+    font-size:36px;
+
+    text-transform:uppercase;
+
+    line-height:.9;
+}
+
+.map-card p{
+    color:#77736e;
+
+    font-size:10px;
+
+    line-height:1.8;
+
+    margin-top:14px;
+}
+
+.map-card .btn{
+    width:100%;
+
+    margin-top:20px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    background:#070707;
+
+    padding:75px 0 25px;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:1.5fr 1fr 1fr 1fr;
+
+    gap:50px;
+
+    padding-bottom:55px;
+
+    border-bottom:1px solid var(--border);
+}
+
+.footer-brand p{
+    max-width:330px;
+
+    color:#68645f;
+
+    font-size:10px;
+
+    line-height:1.9;
+
+    margin-top:22px;
+}
+
+.footer-col h4{
+    color:#c1bcb5;
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+
+    margin-bottom:20px;
+}
+
+.footer-col a{
+    display:block;
+
+    color:#66625d;
+
+    font-size:10px;
+
+    margin:11px 0;
+
+    transition:.3s;
+}
+
+.footer-col a:hover{
+    color:var(--gold2);
+}
+
+.footer-bottom{
+    padding-top:24px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    color:#494641;
+
+    font-size:8px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+.whatsapp{
+    position:fixed;
+
+    right:25px;
+    bottom:25px;
+
+    z-index:900;
+
+    width:56px;
+    height:56px;
+
+    border-radius:50%;
+
+    background:#25D366;
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:23px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.4);
+
+    transition:.3s;
+}
+
+.whatsapp:hover{
+    transform:translateY(-5px) scale(1.05);
+}
+
+
+/* =========================================================
+   TOP BUTTON
+========================================================= */
+
+.top-btn{
+    position:fixed;
+
+    right:25px;
+    bottom:95px;
+
+    z-index:800;
+
+    width:42px;
+    height:42px;
+
+    border:1px solid #444;
+
+    background:#111;
+
+    color:white;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s;
+}
+
+.top-btn.show{
+    opacity:1;
+    visibility:visible;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+    .nav-links{
+        position:fixed;
+
+        left:0;
+        right:0;
+        top:75px;
+
+        background:rgba(10,10,10,.98);
+
+        backdrop-filter:blur(20px);
+
+        padding:30px 7%;
+
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+
+        gap:24px;
+
+        transform:translateY(-130%);
+
+        transition:.4s;
+    }
+
+    .nav-links.active{
+        transform:translateY(0);
+    }
+
+    .nav-book{
+        display:none;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .hero{
+        min-height:760px;
+
+        background-position:62% center;
+    }
+
+    .hero h1{
+        font-size:75px;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+
+        gap:60px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat{
+        padding:25px 10px;
+    }
+
+    .stat:nth-child(2){
+        border-right:0;
+    }
+
+    .stat:nth-child(-n+2){
+        border-bottom:1px solid var(--border);
+    }
+
+    .services-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .package-grid{
+        grid-template-columns:1fr;
+    }
+
+    .package.featured{
+        transform:none;
+    }
+
+    .package.featured:hover{
+        transform:translateY(-7px);
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr 1fr;
+
+        grid-template-rows:300px 220px 220px 220px;
+    }
+
+    .gallery-item:first-child{
+        grid-column:1/-1;
+
+        grid-row:auto;
+    }
+
+    .barber-grid{
+        grid-template-columns:1fr;
+    }
+
+    .barber-image{
+        height:500px;
+    }
+
+    .booking-grid{
+        grid-template-columns:1fr;
+
+        gap:55px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-brand{
+        grid-column:1/-1;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .nav-inner{
+        height:75px;
+    }
+
+    .logo-text{
+        font-size:21px;
+    }
+
+    .logo-mark{
+        width:31px;
+        height:31px;
+    }
+
+    .hero{
+        min-height:720px;
+    }
+
+    .hero h1{
+        font-size:63px;
+
+        letter-spacing:-1px;
+    }
+
+    .hero-kicker{
+        font-size:7px;
+
+        letter-spacing:3px;
+    }
+
+    .hero-subtitle{
+        font-size:12px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .hero-buttons .btn{
+        width:220px;
+    }
+
+    .hero-number{
+        display:none;
+    }
+
+    .section{
+        padding:85px 0;
+    }
+
+    .section-title{
+        font-size:58px;
+    }
+
+    .about-image{
+        padding:10px;
+    }
+
+    .about-image::before{
+        inset:0 25px 25px 0;
+    }
+
+    .about-image img{
+        height:450px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat-number{
+        font-size:43px;
+    }
+
+    .stat-label{
+        font-size:7px;
+        letter-spacing:2px;
+    }
+
+    .services-grid{
+        grid-template-columns:1fr;
+    }
+
+    .service{
+        min-height:260px;
+    }
+
+    .feature{
+        min-height:600px;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr;
+
+        grid-template-rows:
+            330px
+            230px
+            230px
+            230px
+            230px;
+    }
+
+    .gallery-item:first-child{
+        grid-column:auto;
+    }
+
+    .barber-image{
+        height:450px;
+    }
+
+    .testimonial{
+        padding:90px 0;
+    }
+
+    blockquote{
+        font-size:43px;
+    }
+
+    .booking-form{
+        padding:30px 22px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .map{
+        min-height:500px;
+    }
+
+    .map-card{
+        left:5%;
+        right:5%;
+
+        width:auto;
+
+        padding:28px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-brand{
+        grid-column:auto;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+    }
+
+    .whatsapp{
+        right:18px;
+        bottom:18px;
+    }
+
+    .top-btn{
+        right:18px;
+        bottom:85px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     LOADER
+====================================================== -->
+
+<div class="loader" id="loader">
+
+    <div class="loader-inner">
+
+        <div class="loader-symbol"></div>
+
+        <p>
+            Preparing your grooming experience
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     NAVBAR
+====================================================== -->
+
+<header class="navbar" id="navbar">
+
+    <div class="nav-inner">
+
+        <a href="#home" class="logo">
+
+            <div class="logo-mark">
+                <span>M</span>
+            </div>
+
+            <div class="logo-text">
+
+                MEN'S GROOMING
+
+                <small>
+                    SALON • BARBERSHOP
+                </small>
+
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links" id="navLinks">
+
+            <a href="#home">Home</a>
+
+            <a href="#about">About</a>
+
+            <a href="#services">Services</a>
+
+            <a href="#gallery">Gallery</a>
+
+            <a href="#barbers">Barbers</a>
+
+            <a href="#contact">Contact</a>
+
+        </nav>
+
+
+        <a href="#booking" class="nav-book">
+            BOOK NOW
+        </a>
+
+
+        <button class="menu-btn" id="menuBtn">
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content reveal">
+
+        <div class="hero-kicker">
+            Hair • Beard • Grooming
+        </div>
+
+
+        <h1>
+
+            LOOK<br>
+
+            <span>SHARP.</span><br>
+
+            STAY<br>
+
+            <span>ICONIC.</span>
+
+        </h1>
+
+
+        <p class="hero-subtitle">
+
+            Premium men's grooming for men who care about
+            the details. Precision cuts, signature beard
+            styling, traditional shaves and modern grooming
+            — all under one roof.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a href="#booking" class="btn btn-gold">
+                Book Your Appointment →
+            </a>
+
+            <a href="#services" class="btn btn-outline">
+                Explore Services
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-number">
+        01
+    </div>
+
+
+    <div class="hero-scroll">
+
+        <span class="scroll-line"></span>
+
+        Scroll to explore
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     ABOUT
+====================================================== -->
+
+<section class="section about" id="about">
+
+    <div class="container about-grid">
+
+
+        <div class="about-image reveal">
+
+            <img
+                src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1200&q=90"
+                alt="Professional men's grooming"
+            >
+
+
+            <div class="about-badge">
+
+                <strong>
+                    10+
+                </strong>
+
+                <span>
+                    Years of Craft
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="about-copy reveal">
+
+            <div class="eyebrow">
+                The Philosophy
+            </div>
+
+
+            <h2 class="section-title">
+
+                GROOMING<br>
+
+                <span>WITHOUT</span><br>
+
+                COMPROMISE.
+
+            </h2>
+
+
+            <p>
+
+                We believe a great haircut is more than just
+                removing hair. It is about understanding your
+                style, your face, your personality and the way
+                you want to present yourself.
+
+            </p>
+
+
+            <p>
+
+                Our barbers combine traditional barbering
+                techniques with modern styling to create clean,
+                confident looks that work for you.
+
+            </p>
+
+
+            <div class="about-signature">
+
+                Precision • Style • Confidence
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     STATS
+====================================================== -->
+
+<section class="stats">
+
+    <div class="container stats-grid">
+
+
+        <div class="stat reveal">
+
+            <div class="stat-number">
+                10+
+            </div>
+
+            <div class="stat-label">
+                Years Experience
+            </div>
+
+        </div>
+
+
+        <div class="stat reveal">
+
+            <div class="stat-number">
+                8K+
+            </div>
+
+            <div class="stat-label">
+                Happy Clients
+            </div>
+
+        </div>
+
+
+        <div class="stat reveal">
+
+            <div class="stat-number">
+                4.9
+            </div>
+
+            <div class="stat-label">
+                Average Rating
+            </div>
+
+        </div>
+
+
+        <div class="stat reveal">
+
+            <div class="stat-number">
+                20+
+            </div>
+
+            <div class="stat-label">
+                Grooming Services
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     SERVICES
+====================================================== -->
+
+<section class="section services" id="services">
+
+    <div class="container">
+
+
+        <div class="reveal">
+
+            <div class="eyebrow">
+                What We Do
+            </div>
+
+
+            <h2 class="section-title">
+
+                THE ART OF<br>
+
+                <span>GROOMING.</span>
+
+            </h2>
+
+
+            <p class="section-description">
+
+                From classic barbering to contemporary styles,
+                every service is performed with precision,
+                attention to detail and premium products.
+
+            </p>
+
+        </div>
+
+
+        <div class="services-grid">
+
+
+            <div class="service reveal">
+
+                <span class="service-number">
+                    01
+                </span>
+
+
+                <div class="service-icon">
+                    ✂
+                </div>
+
+
+                <h3>
+                    Haircut
+                </h3>
+
+
+                <p>
+
+                    Classic, modern, fade, textured or
+                    completely personalised — your cut,
+                    your style.
+
+                </p>
+
+
+                <a href="#booking" class="service-link">
+                    Book Service →
+                </a>
+
+            </div>
+
+
+            <div class="service reveal">
+
+                <span class="service-number">
+                    02
+                </span>
+
+
+                <div class="service-icon">
+                    ◆
+                </div>
+
+
+                <h3>
+                    Beard Design
+                </h3>
+
+
+                <p>
+
+                    Precision beard shaping and styling
+                    designed around your face and personal
+                    aesthetic.
+
+                </p>
+
+
+                <a href="#booking" class="service-link">
+                    Book Service →
+                </a>
+
+            </div>
+
+
+            <div class="service reveal">
+
+                <span class="service-number">
+                    03
+                </span>
+
+
+                <div class="service-icon">
+                    ◇
+                </div>
+
+
+                <h3>
+                    Royal Shave
+                </h3>
+
+
+                <p>
+
+                    A traditional hot towel shave experience
+                    with premium products and meticulous
+                    finishing.
+
+                </p>
+
+
+                <a href="#booking" class="service-link">
+                    Book Service →
+                </a>
+
+            </div>
+
+
+            <div class="service reveal">
+
+                <span class="service-number">
+                    04
+                </span>
+
+
+                <div class="service-icon">
+                    ✦
+                </div>
+
+
+                <h3>
+                    Hair Colour
+                </h3>
+
+
+                <p>
+
+                    Natural colour, grey blending, highlights
+                    and modern colour transformations.
+
+                </p>
+
+
+                <a href="#booking" class="service-link">
+                    Book Service →
+                </a>
+
+            </div>
+
+
+            <div class="service reveal">
+
+                <span class="service-number">
+                    05
+                </span>
+
+
+                <div class="service-icon">
+                    ◎
+                </div>
+
+
+                <h3>
+                    Facial
+                </h3>
+
+
+                <p>
+
+                    Refresh tired skin with professional
+                    cleansing, exfoliation and grooming
+                    treatments.
+
+                </p>
+
+
+                <a href="#booking" class="service-link">
+                    Book Service →
+                </a>
+
+            </div>
+
+
+            <div class="service reveal">
+
+                <span class="service-number">
+                    06
+                </span>
+
+
+                <div class="service-icon">
+                    ★
+                </div>
+
+
+                <h3>
+                    Complete Groom
+                </h3>
+
+
+                <p>
+
+                    Haircut, beard, facial and finishing
+                    touches combined into one complete
+                    grooming experience.
+
+                </p>
+
+
+                <a href="#booking" class="service-link">
+                    Book Service →
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FEATURE
+====================================================== -->
+
+<section class="feature">
+
+
+    <div class="feature-content reveal">
+
+        <div class="eyebrow">
+            Signature Experience
+        </div>
+
+
+        <h2 class="section-title">
+
+            NOT JUST A<br>
+
+            <span>HAIRCUT.</span>
+
+        </h2>
+
+
+        <p class="feature-description">
+
+            Sit back. Let the hot towel relax you.
+            Let the clippers do the work. Leave with a
+            sharper look and a better feeling.
+
+        </p>
+
+
+        <a href="#booking" class="btn btn-gold">
+            Experience It →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     PACKAGES
+====================================================== -->
+
+<section class="section packages">
+
+    <div class="container">
+
+
+        <div class="reveal">
+
+            <div class="eyebrow">
+                Grooming Packages
+            </div>
+
+
+            <h2 class="section-title">
+
+                BUILT FOR<br>
+
+                <span>YOUR ROUTINE.</span>
+
+            </h2>
+
+        </div>
+
+
+        <div class="package-grid">
+
+
+            <div class="package reveal">
+
+                <div class="package-name">
+                    Essential
+                </div>
+
+
+                <p class="package-description">
+
+                    For the man who likes to keep things
+                    clean and simple.
+
+                </p>
+
+
+                <div class="package-price">
+
+                    ₹699
+
+                    <small>
+                        / session
+                    </small>
+
+                </div>
+
+
+                <ul class="package-list">
+
+                    <li>
+                        Premium haircut
+                    </li>
+
+                    <li>
+                        Beard trim
+                    </li>
+
+                    <li>
+                        Styling
+                    </li>
+
+                    <li>
+                        Finishing
+                    </li>
+
+                </ul>
+
+
+                <a href="#booking" class="btn btn-outline">
+                    Book Package
+                </a>
+
+            </div>
+
+
+            <div class="package featured reveal">
+
+                <div class="package-tag">
+                    Most Popular
+                </div>
+
+
+                <div class="package-name">
+                    Signature
+                </div>
+
+
+                <p class="package-description">
+
+                    The complete grooming experience for
+                    your best look.
+
+                </p>
+
+
+                <div class="package-price">
+
+                    ₹1,499
+
+                    <small>
+                        / session
+                    </small>
+
+                </div>
+
+
+                <ul class="package-list">
+
+                    <li>
+                        Premium haircut
+                    </li>
+
+                    <li>
+                        Beard design
+                    </li>
+
+                    <li>
+                        Hot towel shave
+                    </li>
+
+                    <li>
+                        Premium facial
+                    </li>
+
+                    <li>
+                        Hair styling
+                    </li>
+
+                </ul>
+
+
+                <a href="#booking" class="btn btn-gold">
+                    Book Package
+                </a>
+
+            </div>
+
+
+            <div class="package reveal">
+
+                <div class="package-name">
+                    Executive
+                </div>
+
+
+                <p class="package-description">
+
+                    Complete grooming for important days,
+                    events and occasions.
+
+                </p>
+
+
+                <div class="package-price">
+
+                    ₹2,499
+
+                    <small>
+                        / session
+                    </small>
+
+                </div>
+
+
+                <ul class="package-list">
+
+                    <li>
+                        Signature haircut
+                    </li>
+
+                    <li>
+                        Beard sculpting
+                    </li>
+
+                    <li>
+                        Royal shave
+                    </li>
+
+                    <li>
+                        Premium facial
+                    </li>
+
+                    <li>
+                        Hair styling
+                    </li>
+
+                </ul>
+
+
+                <a href="#booking" class="btn btn-outline">
+                    Book Package
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     GALLERY
+====================================================== -->
+
+<section class="section gallery" id="gallery">
+
+    <div class="container">
+
+
+        <div class="reveal">
+
+            <div class="eyebrow">
+                The Work
+            </div>
+
+
+            <h2 class="section-title">
+
+                SHARP LOOKS.<br>
+
+                <span>REAL CONFIDENCE.</span>
+
+            </h2>
+
+        </div>
+
+
+        <div class="gallery-grid">
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1200&q=90"
+                    alt="Men haircut"
+                >
+
+                <div class="gallery-overlay">
+                    <span>
+                        Precision Cuts
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=1000&q=90"
+                    alt="Barber haircut"
+                >
+
+                <div class="gallery-overlay">
+                    <span>
+                        Modern Fade
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?auto=format&fit=crop&w=1000&q=90"
+                    alt="Men grooming"
+                >
+
+                <div class="gallery-overlay">
+                    <span>
+                        Grooming
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1534297635766-a262cdcb8ee4?auto=format&fit=crop&w=1000&q=90"
+                    alt="Beard styling"
+                >
+
+                <div class="gallery-overlay">
+                    <span>
+                        Beard Art
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1000&q=90"
+                    alt="Barbershop"
+                >
+
+                <div class="gallery-overlay">
+                    <span>
+                        The Shop
+                    </span>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     BARBERS
+====================================================== -->
+
+<section class="section barbers" id="barbers">
+
+    <div class="container">
+
+
+        <div class="reveal">
+
+            <div class="eyebrow">
+                The Team
+            </div>
+
+
+            <h2 class="section-title">
+
+                MEET THE<br>
+
+                <span>CRAFTSMEN.</span>
+
+            </h2>
+
+
+            <p class="section-description">
+
+                Experienced barbers who understand that the
+                smallest details can completely change your look.
+
+            </p>
+
+        </div>
+
+
+        <div class="barber-grid">
+
+
+            <div class="barber-card reveal">
+
+                <div class="barber-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1000&q=90"
+                        alt="Master barber"
+                    >
+
+                </div>
+
+
+                <div class="barber-info">
+
+                    <h3>
+                        Master Barber
+                    </h3>
+
+                    <p>
+                        Hair • Fades • Styling
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="barber-card reveal">
+
+                <div class="barber-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=1000&q=90"
+                        alt="Grooming specialist"
+                    >
+
+                </div>
+
+
+                <div class="barber-info">
+
+                    <h3>
+                        Grooming Expert
+                    </h3>
+
+                    <p>
+                        Beard • Shave • Grooming
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="barber-card reveal">
+
+                <div class="barber-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1622288432450-277d0fef5ed9?auto=format&fit=crop&w=1000&q=90"
+                        alt="Style specialist"
+                    >
+
+                </div>
+
+
+                <div class="barber-info">
+
+                    <h3>
+                        Style Specialist
+                    </h3>
+
+                    <p>
+                        Colour • Texture • Trends
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     TESTIMONIAL
+====================================================== -->
+
+<section class="testimonial">
+
+    <div class="container reveal">
+
+        <div class="quote-mark">
+            “
+        </div>
+
+
+        <blockquote>
+
+            “Best haircut I've had in years.
+            The attention to detail is on another level.”
+
+        </blockquote>
+
+
+        <div class="stars">
+            ★ ★ ★ ★ ★
+        </div>
+
+
+        <div class="client">
+            — Happy Client
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     BOOKING
+====================================================== -->
+
+<section class="section booking" id="booking">
+
+    <div class="container booking-grid">
+
+
+        <div class="reveal">
+
+            <div class="eyebrow">
+                Book Your Chair
+            </div>
+
+
+            <h2 class="section-title">
+
+                YOUR NEXT<br>
+
+                <span>LOOK STARTS</span><br>
+
+                HERE.
+
+            </h2>
+
+
+            <p class="section-description">
+
+                Choose your service, select your preferred date
+                and send us your request. Our team will confirm
+                your appointment directly.
+
+            </p>
+
+
+            <div class="contact-info">
+
+
+                <div class="contact-row">
+
+                    <div class="contact-icon">
+                        ☎
+                    </div>
+
+                    <div>
+
+                        <small>
+                            Call
+                        </small>
+
+                        <strong>
+                            +91 98765 43210
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-row">
+
+                    <div class="contact-icon">
+                        ⌖
+                    </div>
+
+                    <div>
+
+                        <small>
+                            Location
+                        </small>
+
+                        <strong>
+                            Your City, Your Location
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-row">
+
+                    <div class="contact-icon">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <small>
+                            Opening Hours
+                        </small>
+
+                        <strong>
+                            10:00 AM — 9:00 PM
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="booking-form reveal">
+
+            <h3>
+                Book An Appointment
+            </h3>
+
+
+            <form id="bookingForm">
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Phone
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="+91"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Service
+                        </label>
+
+                        <select id="service" required>
+
+                            <option value="">
+                                Select service
+                            </option>
+
+                            <option>
+                                Haircut
+                            </option>
+
+                            <option>
+                                Haircut + Beard
+                            </option>
+
+                            <option>
+                                Beard Styling
+                            </option>
+
+                            <option>
+                                Royal Shave
+                            </option>
+
+                            <option>
+                                Hair Colour
+                            </option>
+
+                            <option>
+                                Facial
+                            </option>
+
+                            <option>
+                                Complete Grooming
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>
+                            Message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            placeholder="Anything you'd like us to know?"
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-gold"
+                >
+
+                    Request Appointment →
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     LOCATION
+====================================================== -->
+
+<section class="map" id="contact">
+
+
+    <div class="map-card reveal">
+
+        <div class="eyebrow">
+            Find The Shop
+        </div>
+
+
+        <h3>
+
+            COME IN.<br>
+            SIT DOWN.<br>
+            GET SHARP.
+
+        </h3>
+
+
+        <p>
+
+            Replace this section with the salon's exact
+            address and Google Maps location.
+
+        </p>
+
+
+        <a
+            href="https://maps.google.com"
+            target="_blank"
+            class="btn btn-gold"
+        >
+
+            Open Google Maps →
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <div class="container">
+
+
+        <div class="footer-grid">
+
+
+            <div class="footer-brand">
+
+                <a href="#home" class="logo">
+
+                    <div class="logo-mark">
+                        <span>M</span>
+                    </div>
+
+                    <div class="logo-text">
+
+                        MEN'S GROOMING
+
+                        <small>
+                            SALON • BARBERSHOP
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+                <p>
+
+                    Premium men's grooming built around
+                    precision, confidence and timeless style.
+
+                </p>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Explore
+                </h4>
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#about">
+                    About
+                </a>
+
+                <a href="#services">
+                    Services
+                </a>
+
+                <a href="#gallery">
+                    Gallery
+                </a>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Grooming
+                </h4>
+
+                <a href="#services">
+                    Haircuts
+                </a>
+
+                <a href="#services">
+                    Beard
+                </a>
+
+                <a href="#services">
+                    Shaving
+                </a>
+
+                <a href="#services">
+                    Facial
+                </a>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Contact
+                </h4>
+
+                <a href="tel:+919876543210">
+                    +91 98765 43210
+                </a>
+
+                <a href="#">
+                    Your City
+                </a>
+
+                <a href="#">
+                    Instagram
+                </a>
+
+                <a href="#">
+                    Facebook
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Men's Grooming. All Rights Reserved.
+            </span>
+
+            <span>
+                Premium Grooming Experience
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- ======================================================
+     WHATSAPP
+====================================================== -->
+
+<a
+    href="https://wa.me/919876543210?text=Hello%2C%20I%20would%20like%20to%20book%20an%20appointment."
+    target="_blank"
+    class="whatsapp"
+    aria-label="WhatsApp"
+>
+    ☎
+</a>
+
+
+<!-- ======================================================
+     BACK TO TOP
+====================================================== -->
+
+<button
+    class="top-btn"
+    id="topBtn"
+>
+    ↑
+</button>
+
+
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+window.addEventListener("load", function(){
+
+    setTimeout(function(){
+
+        document
+            .getElementById("loader")
+            .classList
+            .add("hide");
+
+    },700);
+
+});
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+const navbar =
+    document.getElementById("navbar");
+
+window.addEventListener("scroll",function(){
+
+    if(window.scrollY > 50){
+
+        navbar.classList.add("scrolled");
+
+    }else{
+
+        navbar.classList.remove("scrolled");
+
+    }
+
+});
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const menuBtn =
+    document.getElementById("menuBtn");
+
+const navLinks =
+    document.getElementById("navLinks");
+
+
+menuBtn.addEventListener("click",function(){
+
+    navLinks.classList.toggle("active");
+
+    if(navLinks.classList.contains("active")){
+
+        menuBtn.innerHTML = "✕";
+
+    }else{
+
+        menuBtn.innerHTML = "☰";
+
+    }
+
+});
+
+
+document
+.querySelectorAll(".nav-links a")
+.forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+        navLinks.classList.remove("active");
+
+        menuBtn.innerHTML = "☰";
+
+    });
+
+});
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+
+const revealObserver =
+    new IntersectionObserver(
+
+        function(entries){
+
+            entries.forEach(function(entry){
+
+                if(entry.isIntersecting){
+
+                    entry.target
+                        .classList
+                        .add("visible");
+
+                    revealObserver
+                        .unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold:.12
+        }
+
+    );
+
+
+revealElements.forEach(function(element){
+
+    revealObserver.observe(element);
+
+});
+
+
+/* =========================================================
+   BACK TO TOP
+========================================================= */
+
+const topBtn =
+    document.getElementById("topBtn");
+
+
+window.addEventListener("scroll",function(){
+
+    if(window.scrollY > 600){
+
+        topBtn.classList.add("show");
+
+    }else{
+
+        topBtn.classList.remove("show");
+
+    }
+
+});
+
+
+topBtn.addEventListener("click",function(){
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+});
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+const dateInput =
+    document.getElementById("date");
+
+
+const today =
+    new Date();
+
+
+const year =
+    today.getFullYear();
+
+
+const month =
+    String(
+        today.getMonth()+1
+    ).padStart(2,"0");
+
+
+const day =
+    String(
+        today.getDate()
+    ).padStart(2,"0");
+
+
+dateInput.min =
+    `${year}-${month}-${day}`;
+
+
+/* =========================================================
+   BOOKING → WHATSAPP
+========================================================= */
+
+const bookingForm =
+    document.getElementById("bookingForm");
+
+
+bookingForm.addEventListener(
+    "submit",
+    function(event){
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById("name").value;
+
+
+        const phone =
+            document.getElementById("phone").value;
+
+
+        const service =
+            document.getElementById("service").value;
+
+
+        const date =
+            document.getElementById("date").value;
+
+
+        const message =
+            document.getElementById("message").value;
+
+
+        const whatsappNumber =
+            "919876543210";
+
+
+        const text =
+            "Hello! I would like to book an appointment.%0A%0A" +
+
+            "Name: " +
+            encodeURIComponent(name) +
+            "%0A" +
+
+            "Phone: " +
+            encodeURIComponent(phone) +
+            "%0A" +
+
+            "Service: " +
+            encodeURIComponent(service) +
+            "%0A" +
+
+            "Preferred Date: " +
+            encodeURIComponent(date) +
+            "%0A" +
+
+            "Message: " +
+            encodeURIComponent(message);
+
+
+        window.open(
+
+            "https://wa.me/" +
+            whatsappNumber +
+            "?text=" +
+            text,
+
+            "_blank"
+
+        );
+
+    }
+);
+
+
+/* =========================================================
+   HERO PARALLAX
+========================================================= */
+
+window.addEventListener("scroll",function(){
+
+    const hero =
+        document.querySelector(".hero");
+
+
+    if(window.innerWidth > 950){
+
+        const movement =
+            window.scrollY * .12;
+
+
+        hero.style.backgroundPosition =
+            `center calc(50% + ${movement}px)`;
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
